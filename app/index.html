@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Pulse</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="dashboard">
+      <header class="dashboard-header">
+        <div>
+          <p class="eyebrow">Portfolio overview</p>
+          <h1>Project Pulse</h1>
+        </div>
+        <div class="header-actions">
+          <span class="status-pill healthy">Healthy</span>
+        </div>
+      </header>
+
+      <section class="summary-grid" aria-label="Portfolio summary">
+        <article class="summary-card">
+          <span class="summary-label">Active projects</span>
+          <strong id="activeCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span class="summary-label">At risk</span>
+          <strong id="riskCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span class="summary-label">High priority</span>
+          <strong id="priorityCount">0</strong>
+        </article>
+      </section>
+
+      <section class="project-list" aria-label="Project overview">
+        <div id="projectGrid" class="project-grid"></div>
+      </section>
+    </main>
+
+    <script>
+      async function loadProjects() {
+        const response = await fetch('./project-data.json');
+        const data = await response.json();
+        const projects = data.projects || [];
+        const projectGrid = document.getElementById('projectGrid');
+
+        const summaryCounts = {
+          active: projects.length,
+          risk: projects.filter((project) => project.status.toLowerCase() === 'at risk').length,
+          priority: projects.filter((project) => project.priority.toLowerCase() === 'high').length,
+        };
+
+        document.getElementById('activeCount').textContent = summaryCounts.active;
+        document.getElementById('riskCount').textContent = summaryCounts.risk;
+        document.getElementById('priorityCount').textContent = summaryCounts.priority;
+
+        projectGrid.innerHTML = projects
+          .map(
+            (project) => `
+              <article class="project-card" aria-label="${project.name} project card">
+                <div class="card-header">
+                  <div>
+                    <p class="project-owner">${project.owner}</p>
+                    <h2>${project.name}</h2>
+                  </div>
+                  <span class="status-badge ${project.status.toLowerCase().replace(/\s+/g, '-')}">${project.status}</span>
+                </div>
+
+                <dl class="project-meta">
+                  <div>
+                    <dt>Recent activity</dt>
+                    <dd>${project.recentActivity}</dd>
+                  </div>
+                  <div>
+                    <dt>Priority</dt>
+                    <dd>${project.priority}</dd>
+                  </div>
+                </dl>
+              </article>
+            `
+          )
+          .join('');
+      }
+
+      window.addEventListener('DOMContentLoaded', loadProjects);
+    </script>
+  </body>
+</html>

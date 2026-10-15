@@ -1,0 +1,32 @@
+{
+  "projects": [
+    {
+      "name": "Northstar CRM",
+      "owner": "Maya Chen",
+      "status": "On Track",
+      "recentActivity": "UI polish and API integration review completed this week.",
+      "priority": "High"
+    },
+    {
+      "name": "Atlas Support Portal",
+      "owner": "Daniel Ruiz",
+      "status": "At Risk",
+      "recentActivity": "Ticket volume is up and rollout is waiting on automation fixes.",
+      "priority": "High"
+    },
+    {
+      "name": "Horizon Analytics",
+      "owner": "Priya Nair",
+      "status": "On Track",
+      "recentActivity": "Metrics pipeline stabilized and dashboard refresh is live.",
+      "priority": "Medium"
+    },
+    {
+      "name": "Beacon Mobile",
+      "owner": "Ethan Brooks",
+      "status": "Delayed",
+      "recentActivity": "QA backlog grew after the mobile release candidate was rescheduled.",
+      "priority": "High"
+    }
+  ]
+}
